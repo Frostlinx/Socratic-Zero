@@ -1,3 +1,6 @@
+## Overview
+
+Socratic-Zero is a fully autonomous framework that generates high-quality training data for mathematical reasoning from minimal seed examples through the co-evolution of three agents: the *Solver*, the *Teacher*, and the *Generator*. Starting from only 100 seed questions, our approach achieves significant improvements without relying on massive external datasets.
 
 <div align="center">
   <img src="scripts/method.png" alt="Socratic-Zero Framework" width="800"/>
@@ -13,10 +16,6 @@
 </div>
 
 ---
-
-## Overview
-
-Socratic-Zero is a fully autonomous framework that generates high-quality training data for mathematical reasoning from minimal seed examples through the co-evolution of three agents: the *Solver*, the *Teacher*, and the *Generator*. Starting from only 100 seed questions, our approach achieves significant improvements without relying on massive external datasets.
 
 <p align="center">
   <img src="scripts/pipeline.png" alt="Socratic-Zero Pipeline" width="900"/>
@@ -255,21 +254,16 @@ df -h $WORKSPACE_DIR
 ## Citation
 
 ```bibtex
-@article{wang2024socratic,
-  title={Socratic-Zero: Bootstrapping Reasoning via Data-Free Agent Co-evolution},
-  author={Wang, Shaobo and Jiao, Zhengbo and Zhang, Zifan and Peng, Yilang and Ze, Xu and Yang, Boyu and Wang, Wei and Wei, Hu and Zhang, Linfeng},
-  journal={arXiv preprint arXiv:2509.24726},
-  year={2024},
-  url={http://arxiv.org/abs/2509.24726}
+@misc{wang2025socraticzerobootstrappingreasoning,
+      title={Socratic-Zero : Bootstrapping Reasoning via Data-Free Agent Co-evolution}, 
+      author={Shaobo Wang and Zhengbo Jiao and Zifan Zhang and Yilang Peng and Xu Ze and Boyu Yang and Wei Wang and Hu Wei and Linfeng Zhang},
+      year={2025},
+      eprint={2509.24726},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2509.24726}, 
 }
 ```
 
-## License
 
-This project is licensed for research and academic use. See [LICENSE](LICENSE) for details.
 
----
-
-<div align="center">
-  <strong>Socratic-Zero: Autonomous Reasoning Through Co-evolutionary Learning</strong>
-</div>
