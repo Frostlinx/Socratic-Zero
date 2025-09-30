@@ -181,46 +181,6 @@ python utils/status_checker.py --quick
 
 </details>
 
-### 🎮 Semi-Automated Training
-
-<details>
-<summary>📋 Click to expand features</summary>
-
-- **🎛️ Interactive Control**: Manual progression through training stages
-- **📊 Real-time Monitoring**: Detailed status information and progress tracking
-- **🔧 Flexible Recovery**: Manual retry options for failed stages
-- **📈 Stage-by-Stage Execution**: Fine-grained control over training process
-
-</details>
-
-### 🔄 Training Stages
-
-```mermaid
-graph TD
-    A[📊 Data Collection] --> B[✅ Data Grading]
-    B --> C[🔄 DPO Conversion]
-    C --> D[🏋️ TRL Training]
-    D --> E[📈 Next Round Prep]
-    
-    A1[🔄 Multi-GPU parallel solver trajectory collection]
-    B1[👨‍🏫 Teacher batch grading with 32 concurrent processing]
-    C1[📊 Convert grading results to DPO triplets, save as parquet]
-    D1[🚀 Distributed training using accelerate + TRL]
-    E1[📈 Build next round question pool with enhanced questions]
-    
-    A -.-> A1
-    B -.-> B1
-    C -.-> C1
-    D -.-> D1
-    E -.-> E1
-    
-    style A fill:#e1f5fe
-    style B fill:#f3e5f5
-    style C fill:#e8f5e8
-    style D fill:#fff3e0
-    style E fill:#fce4ec
-```
-
 ## ⚙️ Configuration
 
 ### Default Configuration
@@ -266,17 +226,7 @@ graph TD
 - Independent testing and maintenance support
 - Complete error handling mechanisms
 
-## 🖥️ GPU Allocation
 
-<div align="center">
-
-| Component | GPU Assignment | Description |
-|-----------|----------------|-------------|
-| 🧠 **Solver Collection** | GPU 4 (configurable) | Single GPU for trajectory generation |
-| 🏋️ **TRL Training** | GPU 0-7 | 8-card parallel using accelerate |
-| 🧠 **Memory Management** | Auto cleanup | Automatic cleanup and release between stages |
-
-</div>
 
 ### 🚀 Parallel Strategy
 - **📊 Data collection**: Multi-GPU parallel with intelligent task allocation
