@@ -1,313 +1,261 @@
+
 <div align="center">
-  <img src="scripts/method.pdf" alt="Socratic-Zero Framework" width="800"/>
+  <img src="scripts/method.png" alt="Socratic-Zero Framework" width="800"/>
   
   # Socratic-Zero
   
   **Bootstrapping Reasoning via Data-Free Agent Co-evolution**
   
   [![arXiv](https://img.shields.io/badge/arXiv-2509.24726-b31b1b.svg)](http://arxiv.org/abs/2509.24726)
-  [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+  [![Python 3.10.13](https://img.shields.io/badge/python-3.10.13-blue.svg)](https://www.python.org/downloads/release/python-31013/)
   [![License](https://img.shields.io/badge/License-Research-green.svg)](#license)
   
 </div>
 
 ---
 
-## 🎯 Overview
+## Overview
+
+Socratic-Zero is a fully autonomous framework that generates high-quality training data for mathematical reasoning from minimal seed examples through the co-evolution of three agents: the *Solver*, the *Teacher*, and the *Generator*. Starting from only 100 seed questions, our approach achieves significant improvements without relying on massive external datasets.
 
 <p align="center">
-  <img src="scripts/pipeline.pdf" alt="Socratic-Zero Pipeline" width="900"/>
+  <img src="scripts/pipeline.png" alt="Socratic-Zero Pipeline" width="900"/>
   <br>
-  <em>The Socratic-Zero Framework: Multi-Agent Co-evolutionary System Pipeline</em>
+  <em>The Socratic-Zero Framework Pipeline</em>
 </p>
 
-ProSetting is the implementation of the Socratic-Zero framework - a progressive reinforcement learning training system that enables iterative training of mathematical reasoning models through co-evolution of three agents: **Solver**, **Teacher**, and **Generator**. Starting from only 100 seed questions, our approach achieves significant improvements without relying on massive external datasets.
-
-### 🏆 Key Results
+## Key Results
 
 <div align="center">
-  <img src="scripts/comparison (1).pdf" alt="Performance Comparison" width="800"/>
+  <img src="scripts/compare.png" alt="Performance Comparison" width="800"/>
   <br>
-  <em>Solver and Generator Performance Comparison</em>
+  <em>Performance comparison across mathematical reasoning benchmarks</em>
 </div>
 
-- **🧠 Socratic-Solver-8B**: Achieves **+20.2 percentage points** average improvement across seven mathematical reasoning benchmarks
-- **🏭 Socratic-Generator-32B**: Produces synthetic data enabling student models to outperform commercial LLMs including GPT-5, Gemini-2.5-Pro, and Claude-4.1-Opus
-- **🔄 Cross-Architecture**: Consistent improvements on Qwen3 and GLM4 model families
+- **Socratic-Solver-8B**: +20.2 percentage points average improvement across seven mathematical reasoning benchmarks
+- **Socratic-Generator-32B**: Produces synthetic data enabling student models to outperform commercial LLMs
+- **Cross-Architecture**: Consistent improvements on Qwen3 and GLM4 model families
 
-## 🏗️ Architecture
+## Installation
 
-### Core Components
+### Prerequisites
 
-<div align="center">
-  
-| Component | Role | Description |
-|-----------|------|-------------|
-| 🧠 **Solver Model** | Reasoning Agent | Mathematical reasoning model that learns from preference feedback |
-| 👨‍🏫 **Teacher Model** | Oracle & Evaluator | Fixed oracle providing evaluation and strategic problem generation |
-| 🏭 **Generator Model** | Curriculum Designer | Learns to distill Teacher's curriculum design strategy |
-| ⚙️ **Training Frameworks** | Execution Engine | Supports both VERL PPO and TRL DPO (recommended) |
-
-</div>
-
-### Training Flow
-
-```mermaid
-graph LR
-    A[📚 Questions] --> B[🧠 Solver]
-    B --> C[👨‍🏫 Teacher]
-    C --> D[📊 DPO Triplets]
-    D --> E[🔄 Next Round]
-    
-    B -.-> F[📝 Collection]
-    C -.-> G[✅ Grading]
-    D -.-> H[🔀 Cartesian]
-    E -.-> I[💾 Parquet]
-    I -.-> J[⚖️ Weight Update]
-    
-    style A fill:#e1f5fe
-    style B fill:#f3e5f5
-    style C fill:#e8f5e8
-    style D fill:#fff3e0
-    style E fill:#fce4ec
+```bash
+git clone https://github.com/Frostlinx/Socratic-Zero.git
+cd Socratic-Zero
+pip install -r requirements.txt
 ```
-
-## 📁 Project Structure
-
-```
-ProSetting/
-├── 📜 scripts/
-│   ├── run_training.py           # 🚀 Unified training launcher
-│   ├── auto_trainer.py           # 🤖 Fully automated training (recommended)
-│   ├── semi_auto_trainer.py      # 🎮 Interactive training
-│   ├── method.pdf               # 🖼️ Framework overview figure
-│   ├── pipeline.pdf             # 🔄 Detailed pipeline diagram
-│   └── comparison (1).pdf       # 📊 Results comparison chart
-├── 🗂️ collectors/                # Data collection modules
-│   ├── trajectory_collector.py   # 🔄 Multi-GPU trajectory generation
-│   └── data_normalizer.py        # 📏 Data standardization
-├── ⚙️ processors/                # Data processing modules
-│   ├── reward_calculator.py      # 🏆 Teacher-based reward computation
-│   ├── question_enhancer.py      # 📈 Progressive question generation
-│   └── solver_data_processor.py  # 🔧 Training data preparation
-├── 💾 datasets/                  # Dataset management
-│   ├── dpo_data_converter.py     # 🔄 DPO format conversion
-│   └── data_saver.py             # 💾 Data persistence
-├── 🏋️ trainers/                 # Training execution
-│   ├── trl_trainer.py            # 🎯 TRL-based training
-│   └── gpu_manager.py            # 🖥️ Resource management
-├── 🎛️ managers/                 # System management
-│   ├── round_controller.py       # 🔄 Multi-round coordination
-│   └── question_manager.py       # ❓ Question pool management
-└── 🧠 core/                     # Core utilities
-    └── state_manager.py          # 💾 Training state persistence
-```
-
-## 🚀 Quick Start
 
 ### Environment Setup
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/Frostlinx/Socratic-Zero.git
-cd Socratic-Zero
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Configure environment variables
 cp .env.example .env
-# Edit .env file with key parameters:
-# SOLVER_MODEL_PATH=/path/to/solver/model
-# QUESTIONS_FILE=/path/to/questions.json
-# WORKSPACE_DIR=/path/to/workspace
-# TRL_NUM_PROCESSES=8
-# TEACHER_BASE_URL=http://your-teacher-api
-
-# 4. Verify environment
-python utils/status_checker.py --quick
 ```
 
-### 🎮 Running Training
+Edit `.env` with your configuration:
 
-#### 1. Unified Launcher (Recommended)
 ```bash
-cd /home/project/ProSetting
+# Model Paths
+SOLVER_MODEL_PATH=/path/to/solver/model
+GENERATOR_MODEL_PATH=/path/to/generator/model
+TEACHER_BASE_URL=http://your-teacher-api-endpoint
 
-# 🤖 Fully automated training (default)
+# Training Configuration
+WORKSPACE_DIR=/path/to/workspace
+QUESTIONS_FILE=/path/to/seed_questions.json
+TRL_NUM_PROCESSES=8
+
+# GPU Configuration
+PHYSICAL_SOLVER_GPU=4
+PHYSICAL_TRAINING_GPUS=0,1,2,3,4,5,6,7
+```
+
+## Quick Start
+
+### Verify Setup
+```bash
+python tools/utils/status_checker.py --quick
+```
+
+### Run Training
+
+**Fully Automated Training (Recommended)**
+```bash
+python scripts/auto_trainer.py
+```
+
+**Semi-Automated Training**
+```bash
+python scripts/semi_auto_trainer.py
+```
+
+**Unified Launcher**
+```bash
+# Automated mode
 python scripts/run_training.py
 
-# 🎮 Semi-automated training
+# Semi-automated mode
 python scripts/run_training.py --mode semi
 ```
 
-#### 2. Direct Training Scripts
-```bash
-cd /home/project/ProSetting
+## Training Configuration
 
-# 🤖 Fully automated TRL training (recommended)
-python scripts/auto_trainer.py
-
-# 🎮 Semi-automated TRL training
-python scripts/semi_auto_trainer.py
-```
-
-#### 3. System Testing
-```bash
-# 🧪 Quick system logic test
-python utils/test_runner.py
-
-# 📊 System status check
-python utils/status_checker.py
-
-# ⚡ Quick status check
-python utils/status_checker.py --quick
-```
-
-## ⚙️ Training Features
-
-### 🤖 Fully Automated Training (Recommended)
-
-<details>
-<summary>📋 Click to expand features</summary>
-
-- **🔄 Complete Automation**: No manual intervention required
-- **🔁 Smart Retry**: Configurable retry mechanism with intervals
-- **🛠️ Error Recovery**: Option to skip or stop on training failures
-- **💾 Checkpoint Recovery**: Resume from any stage
-- **🖥️ Resource Management**: Automatic GPU memory cleanup
-- **📝 Detailed Logging**: Complete training process records and final reports
-- **⚡ Signal Handling**: Graceful shutdown support (Ctrl+C)
-
-</details>
-
-## ⚙️ Configuration
-
-### Default Configuration
+### Default Settings
 ```python
 {
-    "max_rounds": 5,                    # 🔄 Total training rounds
-    "save_rounds": [3, 4, 5],          # 💾 Checkpoint save rounds
-    "attempts_per_question": 8,         # 🎯 Attempts per question
-    "physical_solver_gpu": "4",         # 🖥️ Solver model GPU
-    "physical_grpo_gpu": "0,1,2,3,4,5,6,7",  # 🖥️ Training GPUs
-    "training_framework": "TRL_DPO",   # 🏋️ Training framework
-    "trl_num_processes": 8,            # ⚡ TRL training processes
-    "trl_mixed_precision": "bf16"      # 🎯 Mixed precision training
+    "max_rounds": 5,                    # Total training rounds
+    "save_rounds": [3, 4, 5],          # Checkpoint save rounds
+    "attempts_per_question": 8,         # Solution attempts per question
+    "training_framework": "TRL_DPO",   # Training framework
+    "trl_mixed_precision": "bf16"      # Mixed precision training
 }
 ```
 
-### 🎯 Model Paths
-- **🧠 Solver Model**: Configure in `SOLVER_MODEL_PATH`
-- **🏭 Generator Model**: Configure in `GENERATOR_MODEL_PATH`  
-- **📚 Question Data**: Configure in `QUESTIONS_FILE`
-- **👨‍🏫 Teacher API**: Configure in `TEACHER_BASE_URL`
+### Training Features
 
-## 🌟 Core Features
+**Fully Automated Mode**
+- Complete automation with no manual intervention
+- Smart retry mechanisms with configurable intervals
+- Automatic error recovery and checkpoint resumption
+- Comprehensive logging and progress tracking
+- Graceful shutdown support (Ctrl+C)
 
-### 1. 📈 Progressive Training Strategy
-- **🔄 Rounds 1-2**: Data accumulation phase without model updates
-- **🚀 Round 3+**: Active training with progressive weight transfer
-- **📚 Question Pool Evolution**: Systematic expansion through teacher-guided enhancement
-- **🛠️ Failure Recovery**: Automatic replay of failed questions with enhanced variants
+**Semi-Automated Mode**
+- Interactive control with manual stage progression
+- Real-time monitoring and status information
+- Flexible recovery options for failed stages
+- Fine-grained control over training process
 
-### 2. 🔄 Inter-Round Weight Transfer
-- Round 1 uses original weights
-- Round 2+ automatically loads previous round results
-- Supports FSDP distributed weight auto-merging
+## Project Structure
 
-### 3. 💾 Data Persistence
-- All training data permanently saved
-- Standardized file naming conventions
-- Training state recovery support
+```
+Socratic-Zero/
+├── scripts/                      # Training execution
+│   ├── run_training.py           # Unified launcher
+│   ├── auto_trainer.py           # Automated training
+│   ├── semi_auto_trainer.py      # Interactive training
+│   ├── evaluate_mean_at_k.py     # Evaluation script
+│   ├── method.png               # Framework diagram
+│   ├── pipeline.png             # Pipeline diagram
+│   └── compare.png              # Results comparison
+├── core/                         # Core components
+│   └── state_manager.py          # State management
+├── trainers/                     # Training modules
+│   ├── trl_trainer.py            # TRL-based training
+│   └── gpu_manager.py            # GPU management
+├── processors/                   # Data processing
+│   ├── solver_data_processor.py  # Data preparation
+│   ├── question_enhancer.py      # Question generation
+│   └── reward_calculator.py      # Reward computation
+├── collectors/                   # Data collection
+│   ├── trajectory_collector.py   # Trajectory sampling
+│   └── data_normalizer.py        # Data standardization
+├── managers/                     # System coordination
+│   ├── round_controller.py       # Training coordination
+│   └── question_manager.py       # Question management
+├── datasets/                     # Dataset handling
+│   ├── dpo_data_converter.py     # DPO conversion
+│   └── data_saver.py             # Data persistence
+└── src/evaluation/               # Evaluation
+    ├── evaluator.py              # Model evaluation
+    └── metrics.py                # Performance metrics
+```
 
-### 4. 🧩 Modular Architecture
-- Separated data collection, processing, training, and management modules
-- Independent testing and maintenance support
-- Complete error handling mechanisms
+## Evaluation
 
+### Solver Evaluation
+```bash
+python scripts/evaluate_mean_at_k.py \
+    --model_path ./models/socratic-solver-8b \
+    --benchmarks AMC23,AIME24,AIME25,MATH-500,GSM8K,Minerva,Olympiad \
+    --num_samples 32 \
+    --temperature 0.7
+```
 
+### Generator Quality Assessment
+```bash
+python src/evaluation/evaluator.py \
+    --generator_model ./models/socratic-generator-32b \
+    --test_seeds 1000 \
+    --output_dir ./evaluation_results
+```
 
-### 🚀 Parallel Strategy
-- **📊 Data collection**: Multi-GPU parallel with intelligent task allocation
-- **✅ Grading processing**: 32 concurrent Teacher API calls
-- **📈 Question enhancement**: 32 concurrent Teacher2 processing
+## Results
 
-## 🔧 Troubleshooting
+### Solver Performance
+
+| Model | AMC23 | AIME24 | AIME25 | MATH-500 | GSM8K | Minerva | Olympiad | Average |
+|-------|-------|--------|--------|----------|-------|---------|----------|---------|
+| Baseline | 45.8% | 12.3% | 11.4% | 62.7% | 74.6% | 41.9% | 35.9% | 40.7% |
+| **Socratic-Zero** | **63.7%** | **28.4%** | **24.6%** | **81.2%** | **87.3%** | **52.4%** | **55.1%** | **56.1%** |
+| **Improvement** | **+17.9** | **+16.1** | **+13.2** | **+18.5** | **+12.7** | **+10.5** | **+19.2** | **+15.4** |
+
+### Generator Downstream Effectiveness
+
+| Generator | AIME-24 | AIME-25 | AMC-23 | GSM8K | MATH-500 | Minerva | Olympiad | Average |
+|-----------|---------|---------|--------|-------|----------|---------|----------|---------|
+| Qwen3-32B | 9.2% | 10.0% | 44.4% | 75.7% | 55.7% | 15.1% | 24.5% | 34.97% |
+| Qwen3-235B-A22B | 12.5% | 12.5% | 47.5% | 76.1% | 57.8% | 16.4% | 23.6% | 37.13% |
+| Gemini-2.5-Pro | 10.0% | 15.0% | 46.9% | 78.1% | 57.2% | 16.0% | 25.4% | 37.20% |
+| GPT5-global | 12.5% | 13.3% | 45.0% | 76.8% | 56.6% | 15.5% | 25.9% | 36.62% |
+| Claude-4.1-Opus | 13.3% | 13.8% | 46.5% | 77.3% | 57.5% | 16.7% | 24.3% | 37.63% |
+| **Socratic-Generator-32B** | **12.5%** | **13.3%** | **48.1%** | **77.6%** | **57.8%** | **18.4%** | **24.6%** | **37.72%** |
+
+## Troubleshooting
 
 ### Common Issues
 
-<details>
-<summary>🚨 Model path not found</summary>
-
+**Environment Setup**
 ```bash
-export SOLVER_MODEL_PATH="/correct/path/to/model"
+# Check Python version
+python --version  # Should be 3.10.13
+
+# Verify GPU availability
+python -c "import torch; print(torch.cuda.is_available())"
+
+# Check model paths
+ls $SOLVER_MODEL_PATH
 ```
-</details>
 
-<details>
-<summary>🖥️ GPU memory insufficient</summary>
-
-- Check GPU usage: `nvidia-smi`
-- Adjust batch_size or reduce parallelism
-</details>
-
-<details>
-<summary>💾 Checkpoint merge failure</summary>
-
-- Check checkpoint directory permissions
-- Confirm FSDP weight files are complete
-</details>
-
-<details>
-<summary>🔄 Training interruption recovery</summary>
-
+**Training Issues**
 ```bash
-# 🤖 Fully automated training recovery
-python scripts/auto_trainer.py
+# Resume interrupted training
+python scripts/auto_trainer.py --resume
 
-# 🎮 Semi-automated training recovery
-python scripts/semi_auto_trainer.py
+# Check training status
+python tools/utils/status_checker.py
 
-# 📊 Check recovery status
-python utils/status_checker.py
+# Clear GPU memory
+python -c "import torch; torch.cuda.empty_cache()"
 ```
-</details>
 
-### 📝 Log Files
-- **🏋️ TRL Training Log**: `/tmp/trl_trainer.log`
-- **🤖 Automated Training Log**: `/tmp/auto_trainer.log`
-- **📊 Training Output**: Real-time console output
-- **💾 State Files**: `{WORKSPACE_DIR}/training_state.json`
-- **📈 Round Progress**: `{WORKSPACE_DIR}/round_XX_progress.json`
-- **📊 Training Results**: `{WORKSPACE_DIR}/training_results/`
-- **📋 Training Summary**: `{WORKSPACE_DIR}/auto_training_summary.json`
-- **💾 Checkpoint Files**: `{WORKSPACE_DIR}/checkpoint_round_X.json`
+**Memory Management**
+```bash
+# Monitor GPU usage
+nvidia-smi
 
-## 👨‍💻 Development Guide
+# Check disk space
+df -h $WORKSPACE_DIR
+```
 
-### Adding New Modules
-1. Create new file in appropriate directory
-2. Implement standard interfaces and error handling
-3. Update corresponding `__init__.py` exports
-4. Add unit tests
+### Log Files
 
-### Custom Training Strategies
-1. Modify `RoundController` configuration
-2. Adjust question pool building logic
-3. Customize reward calculation functions
+- **Training Logs**: `{WORKSPACE_DIR}/logs/`
+- **Checkpoints**: `{WORKSPACE_DIR}/checkpoints/`
+- **Training State**: `{WORKSPACE_DIR}/training_state.json`
+- **Results**: `{WORKSPACE_DIR}/training_results/`
 
-### Extending Data Formats
-1. Update `StateManager` file naming
-2. Modify data save and load logic
-3. Ensure backward compatibility
+## Hardware Requirements
 
-## 📚 Citation
+- **Training**: 8×NVIDIA H20 GPUs (96GB HBM3 each)
+- **Teacher Inference**: 16×AMD MI308X GPUs (192GB HBM3 each)
+- **Storage**: ~1TB for training data and checkpoints
+- **Memory**: ~768GB total training memory
 
-If you use this code in your research, please cite:
+## Citation
 
 ```bibtex
-@article{socratic2024,
+@article{wang2024socratic,
   title={Socratic-Zero: Bootstrapping Reasoning via Data-Free Agent Co-evolution},
   author={Wang, Shaobo and Jiao, Zhengbo and Zhang, Zifan and Peng, Yilang and Ze, Xu and Yang, Boyu and Wang, Wei and Wei, Hu and Zhang, Linfeng},
   journal={arXiv preprint arXiv:2509.24726},
@@ -316,21 +264,12 @@ If you use this code in your research, please cite:
 }
 ```
 
-## 📄 License
+## License
 
-This project follows internal use license, for research and development only.
-
-## 🤝 Support
-
-For questions or suggestions, please contact the development team or check project documentation.
+This project is licensed for research and academic use. See [LICENSE](LICENSE) for details.
 
 ---
 
 <div align="center">
-  <img src="scripts/method.pdf" alt="Socratic-Zero Framework" width="600"/>
-  <br>
-  <strong>🎓 Bootstrapping Reasoning Through Socratic Dialogue 🎓</strong>
-  <br>
-  <em>Systematic co-evolutionary training for mathematical reasoning advancement</em>
+  <strong>Socratic-Zero: Autonomous Reasoning Through Co-evolutionary Learning</strong>
 </div>
-
