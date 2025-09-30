@@ -1,0 +1,55 @@
+# ProSetting Progressive Training System Dependencies
+
+# Core deep learning frameworks
+torch>=2.0.0
+transformers>=4.35.0
+tokenizers>=0.14.0
+datasets>=2.14.0
+
+# TRL Training Framework (Alternative to VERL)
+trl>=0.7.0
+accelerate>=0.24.0
+peft>=0.6.0
+
+# Data Processing
+pandas>=2.0.0
+numpy>=1.24.0
+pyarrow>=13.0.0  # parquet support
+fastparquet>=2023.8.0
+
+# Distributed Training and Optimization
+deepspeed>=0.12.0
+bitsandbytes>=0.41.0
+optimum>=1.14.0
+
+# API and Network Requests
+requests>=2.31.0
+aiohttp>=3.8.0
+httpx>=0.25.0
+
+# Data Science and Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.17.0
+
+# Utility Libraries
+tqdm>=4.66.0
+rich>=13.6.0
+click>=8.1.0
+python-dotenv>=1.0.0
+
+# Logging and Monitoring
+wandb>=0.15.0
+tensorboard>=2.14.0
+loguru>=0.7.0
+
+# Testing and Development
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+black>=23.9.0
+flake8>=6.1.0
+
+# Other Tools
+psutil>=5.9.0
+GPUtil>=1.4.0
+py-cpuinfo>=9.0.0
