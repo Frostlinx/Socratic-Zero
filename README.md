@@ -1,18 +1,19 @@
+  
+# Socratic-Zero: Bootstrapping Reasoning via Data-Free Agent Co-evolution   [![arXiv](https://img.shields.io/badge/arXiv-2509.24726-b31b1b.svg)](http://arxiv.org/abs/2509.24726)[![Python 3.10.13](https://img.shields.io/badge/python-3.10.13-blue.svg)](https://www.python.org/downloads/release/python-31013/)[![License](https://img.shields.io/badge/License-Research-green.svg)](#license)
+
+
 ## Overview
 
 Socratic-Zero is a fully autonomous framework that generates high-quality training data for mathematical reasoning from minimal seed examples through the co-evolution of three agents: the *Solver*, the *Teacher*, and the *Generator*. Starting from only 100 seed questions, our approach achieves significant improvements without relying on massive external datasets.
+<div align="center">
+  
+
+  
+</div>
+
 
 <div align="center">
-  <img src="scripts/method.png" alt="Socratic-Zero Framework" width="800"/>
-  
-  # Socratic-Zero
-  
-  **Bootstrapping Reasoning via Data-Free Agent Co-evolution**
-  
-  [![arXiv](https://img.shields.io/badge/arXiv-2509.24726-b31b1b.svg)](http://arxiv.org/abs/2509.24726)
-  [![Python 3.10.13](https://img.shields.io/badge/python-3.10.13-blue.svg)](https://www.python.org/downloads/release/python-31013/)
-  [![License](https://img.shields.io/badge/License-Research-green.svg)](#license)
-  
+  <img src="scripts/method.png" alt="Socratic-Zero Framework" width="800"/>  
 </div>
 
 ---
