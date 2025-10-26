@@ -1,4 +1,11 @@
-  
+好的，遵照您的指示。
+
+我已经将您选择的**版本一**内容整合到了完整的 README 文件中，并**删除了“验证环境配置”**这一步。
+
+现在您可以直接复制下面的全部内容，它就是一份可以直接使用的、完整的 `README.md` 文件。
+
+---
+
 # Socratic-Zero: Bootstrapping Reasoning via Data-Free Agent Co-evolution   [![arXiv](https://img.shields.io/badge/arXiv-2509.24726-b31b1b.svg)](http://arxiv.org/abs/2509.24726)[![Python 3.10.13](https://img.shields.io/badge/python-3.10.13-blue.svg)](https://www.python.org/downloads/release/python-31013/)[![License](https://img.shields.io/badge/License-Research-green.svg)](#license)
 
 
@@ -72,31 +79,16 @@ PHYSICAL_TRAINING_GPUS=0,1,2,3,4,5,6,7
 
 ## Quick Start
 
-### Verify Setup
-```bash
-python tools/utils/status_checker.py --quick
-```
+**Current Execution Workflow**
 
-### Run Training
+The Socratic-Zero framework is composed of several independent, robust modules (e.g., Solver, Teacher, Generator). While each component is fully functional on its own, the process of orchestrating the end-to-end training pipeline currently requires significant manual intervention.
 
-**Fully Automated Training (Recommended)**
-```bash
-python scripts/auto_trainer.py
-```
+This involves manually triggering each stage and frequently adjusting configuration paths between rounds. This high operational overhead is a known limitation we are actively working to eliminate.
 
-**Semi-Automated Training**
-```bash
-python scripts/semi_auto_trainer.py
-```
+**Future Automation**
 
-**Unified Launcher**
-```bash
-# Automated mode
-python scripts/run_training.py
+We are prioritizing the development of a unified launcher to fully automate the training workflow. A seamless, single-command execution is planned for an upcoming release. We appreciate your patience.
 
-# Semi-automated mode
-python scripts/run_training.py --mode semi
-```
 
 ## Training Configuration
 
@@ -111,55 +103,7 @@ python scripts/run_training.py --mode semi
 }
 ```
 
-### Training Features
 
-**Fully Automated Mode**
-- Complete automation with no manual intervention
-- Smart retry mechanisms with configurable intervals
-- Automatic error recovery and checkpoint resumption
-- Comprehensive logging and progress tracking
-- Graceful shutdown support (Ctrl+C)
-
-**Semi-Automated Mode**
-- Interactive control with manual stage progression
-- Real-time monitoring and status information
-- Flexible recovery options for failed stages
-- Fine-grained control over training process
-
-## Project Structure
-
-```
-Socratic-Zero/
-├── scripts/                      # Training execution
-│   ├── run_training.py           # Unified launcher
-│   ├── auto_trainer.py           # Automated training
-│   ├── semi_auto_trainer.py      # Interactive training
-│   ├── evaluate_mean_at_k.py     # Evaluation script
-│   ├── method.png               # Framework diagram
-│   ├── pipeline.png             # Pipeline diagram
-│   └── compare.png              # Results comparison
-├── core/                         # Core components
-│   └── state_manager.py          # State management
-├── trainers/                     # Training modules
-│   ├── trl_trainer.py            # TRL-based training
-│   └── gpu_manager.py            # GPU management
-├── processors/                   # Data processing
-│   ├── solver_data_processor.py  # Data preparation
-│   ├── question_enhancer.py      # Question generation
-│   └── reward_calculator.py      # Reward computation
-├── collectors/                   # Data collection
-│   ├── trajectory_collector.py   # Trajectory sampling
-│   └── data_normalizer.py        # Data standardization
-├── managers/                     # System coordination
-│   ├── round_controller.py       # Training coordination
-│   └── question_manager.py       # Question management
-├── datasets/                     # Dataset handling
-│   ├── dpo_data_converter.py     # DPO conversion
-│   └── data_saver.py             # Data persistence
-└── src/evaluation/               # Evaluation
-    ├── evaluator.py              # Model evaluation
-    └── metrics.py                # Performance metrics
-```
 
 ## Evaluation
 
@@ -265,6 +209,3 @@ df -h $WORKSPACE_DIR
       url={https://arxiv.org/abs/2509.24726}, 
 }
 ```
-
-
-
